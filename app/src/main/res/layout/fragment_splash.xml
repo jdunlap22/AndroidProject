@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_500"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".SplashFragment"
+    >
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginVertical="32dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/app_logo"
+        android:layout_above="@+id/splash_textview"
+        android:src="@drawable/pngegg"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NSCC Contacts"
+        android:id="@+id/splash_textview"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+
+    <ProgressBar
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_below="@id/splash_textview"
+        android:indeterminateTint="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        />
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Splash"/>
+    <item
+        android:id="@+id/nav_contacts_form"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:title="Contacts Form"/>
+    <item
+        android:id="@+id/nav_recycler_view"
+        android:icon="@drawable/ic_baseline_recycler_page_24"
+        android:title="RecyclerView"/>
+    <item
+        android:id="@+id/nav_credits"
+        android:icon="@drawable/ic_baseline_credit_page_24"
+        android:title="Credits"/>
+
+</menu>

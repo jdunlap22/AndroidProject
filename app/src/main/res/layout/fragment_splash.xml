@@ -30,15 +30,6 @@
         android:gravity="center"
         />
 
-    <ProgressBar
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_below="@id/splash_textview"
-        android:indeterminateTint="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"
-        />
-
 
 
 

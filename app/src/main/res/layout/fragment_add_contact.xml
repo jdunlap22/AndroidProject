@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_500"
+    tools:context=".AddContactFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:id="@+id/add_contact">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add a Contact"
+            android:textStyle="bold"
+            android:textSize="32sp"
+            android:textColor="@color/white"
+            android:layout_margin="16dp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_contact"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/form_layout"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/first_name"
+            android:inputType="textPersonName"
+            android:hint="First Name"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/white"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/last_name"
+            android:inputType="textPersonName"
+            android:hint="Last Name"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/white"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/email_address"
+            android:inputType="textEmailAddress"
+            android:hint="Email Address"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/white"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/address"
+            android:inputType="textPostalAddress"
+            android:hint="Address"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/white"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/phone_number"
+            android:inputType="textPhonetic"
+            android:hint="Phone Number"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/white"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <EditText
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/white"
+            android:hint="Notes"
+            android:inputType="text"
+            android:maxLines="15"
+            android:padding="12dp"
+            android:textSize="20sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_btn"
+            android:text="Create Contact"
+            android:backgroundTint="@color/white"
+            android:layout_margin="12dp"
+            android:paddingVertical="12dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            />
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

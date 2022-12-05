@@ -7,8 +7,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Utility {
 
-    static CollectionReference getCollectionReferenceForNotes() {
+    static CollectionReference getCollectionReferenceForContacts() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("notes").document(currentUser.getUid()).collection("my_notes");
+        return FirebaseFirestore.getInstance().collection("Contacts").document(currentUser.getUid()).collection("my_Contacts");
     }
 }

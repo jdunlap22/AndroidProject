@@ -18,6 +18,30 @@ public class Contacts {
         this.notes = notes;
     }
 
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public String getFirstname() {
         return firstname;
     }

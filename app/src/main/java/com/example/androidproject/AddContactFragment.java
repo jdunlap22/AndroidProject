@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 
 import com.example.androidproject.databinding.FragmentAddContactBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 
 public class AddContactFragment extends Fragment {
 
@@ -98,8 +101,20 @@ public class AddContactFragment extends Fragment {
         }
 
         contactAppRef.push().setValue(contacts);
+    }
 
-        Toast.makeText(getActivity(),"Contact Added Successfully",Toast.LENGTH_SHORT).show();
+    void saveContactToFirebase(Contacts contacts) {
+        DocumentReference documentReference;
+        documentReference = Utility.getCollectionReferenceForContacts().document();
+
+        documentReference.set(contacts).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Contact Added successfully", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 }

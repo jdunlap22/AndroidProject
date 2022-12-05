@@ -2,6 +2,8 @@ package com.example.androidproject;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Patterns;
@@ -10,53 +12,77 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.google.firebase.firestore.DocumentReference;
+
+import com.example.androidproject.databinding.FragmentAddContactBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AddContactFragment extends Fragment {
 
     EditText firstNameEditText, lastNameEditText, emailEditText, addressEditText, phoneNumberEditText, noteEditText;
     Button createContactBtn;
-    AddContactFragment binding;
-    boolean isEditMode = false;
+    private FragmentAddContactBinding binding;
+
+    DatabaseReference contactAppRef;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-        EditText firstNameEditText = binding.firstNameEditText;
-        EditText lastNameEditText = binding.lastNameEditText;
-        EditText emailEditText = binding.emailEditText;
-        EditText addressEditText = binding.addressEditText;
-        EditText phoneNumberEditText = binding.phoneNumberEditText;
-        EditText noteEditText = binding.noteEditText;
-        Button createContactBtn = binding.createContactBtn;
+        binding = FragmentAddContactBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        createContactBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        firstNameEditText = root.findViewById(R.id.firstName);
+        lastNameEditText = root.findViewById(R.id.lastName);
+        emailEditText = root.findViewById(R.id.emailAddress);
+        addressEditText = root.findViewById(R.id.address);
+        phoneNumberEditText = root.findViewById(R.id.phoneNumber);
+        noteEditText = root.findViewById(R.id.note);
+        createContactBtn = root.findViewById(R.id.createBtn);
 
-            }
-        });
+        contactAppRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
 
-        return inflater.inflate(R.layout.fragment_add_contact, container, false);
+        createContactBtn.setOnClickListener((v)-> createContact());
+
+        return root;
     }
 
-    boolean validateData(String email, String phone) {
+    boolean validateData(String firstName, String lastName, String email, String address, String phone, String notes) {
+
+        if(firstName.isEmpty()) {
+            firstNameEditText.setError("First Name is blank");
+        }
+
+        if(lastName.isEmpty()) {
+            firstNameEditText.setError("Last Name is blank");
+        }
+
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Email is invalid");
             return false;
+        }
+
+        if(address.isEmpty()){
+            addressEditText.setError("Address is blank");
         }
 
         if(phone.length()<10) {
             phoneNumberEditText.setError("Phone number is invalid");
             return false;
         }
+
+        if(notes.isEmpty()) {
+            noteEditText.setError("Notes are blank");
+        }
         return true;
     }
 
     void createContact() {
+
         String firstname = firstNameEditText.getText().toString();
         String lastname = lastNameEditText.getText().toString();
         String email = emailEditText.getText().toString();
@@ -64,20 +90,16 @@ public class AddContactFragment extends Fragment {
         String phone =phoneNumberEditText.getText().toString();
         String notes = noteEditText.getText().toString();
 
-        boolean isValidated = validateData(email, phone);
+        Contacts contacts = new Contacts(firstname, lastname, email, address, phone, notes);
+
+        boolean isValidated = validateData(firstname, lastname, email, address, phone, notes);
         if(!isValidated) {
             return;
         }
 
-        createContactInFireBase();
-    }
+        contactAppRef.push().setValue(contacts);
 
-    void createContactInFireBase(String firstname, String lastname, String email, String address, String phone, String notes) {
-
-        DocumentReference contactReference;
-        if(isEditMode) {
-            contactReference =
-        }
+        Toast.makeText(getActivity(),"Contact Added Successfully",Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -1,8 +1,11 @@
 package com.example.androidproject;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+
+import java.util.HashMap;
 
 public class ClientDetailActivity extends AppCompatActivity {
 
@@ -27,6 +34,8 @@ public class ClientDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_detail);
+
+        contactAppRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
 
         firstNameTextView = findViewById(R.id.first_Name);
         lastNameTextView = findViewById(R.id.last_Name);
@@ -74,24 +83,40 @@ public class ClientDetailActivity extends AppCompatActivity {
         saveNotesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String note = noteEditText.getText().toString();
 
+                contactAppRef = FirebaseDatabase.getInstance().getReference("Contacts");
+                Toast.makeText(ClientDetailActivity.this, "Note Updated Successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                contactAppRef = FirebaseDatabase.getInstance().getReference("Contacts");
-                contactAppRef.child("Contacts").getKey().
+                AlertDialog.Builder builder = new AlertDialog.Builder(ClientDetailActivity.this);
+                builder.setMessage("Are you sure you want to delete this contact?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                Toast.makeText(ClientDetailActivity.this, "Deleted Contact Successfully", Toast.LENGTH_SHORT).show();
+                        contactAppRef.child(lastName).setValue(null);
+                        Toast.makeText(ClientDetailActivity.this, "Deleted Contact Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(ClientDetailActivity.this, MainActivity.class);
+                        ClientDetailActivity.this.startActivity(intent);
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
             }
         });
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+
+                finish();
             }
         });
     }

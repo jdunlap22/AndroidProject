@@ -49,12 +49,9 @@ public class AddContactFragment extends Fragment {
         createContactBtn = root.findViewById(R.id.createBtn);
 
         contactAppRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
-        String removeData = contactAppRef.child("ID").push().getKey();
-
-        Intent intent = new Intent(getContext(), getActivity());
 
         createContactBtn.setOnClickListener((v)-> createContact());
-        createContactBtn.setOnClickListener((v)-> ClearFields());
+
         return root;
     }
 
@@ -65,12 +62,11 @@ public class AddContactFragment extends Fragment {
         }
 
         if(lastName.isEmpty()) {
-            firstNameEditText.setError("Last Name is blank");
+            lastNameEditText.setError("Last Name is blank");
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Email is invalid");
-            return false;
         }
 
         if(address.isEmpty()){
@@ -79,12 +75,12 @@ public class AddContactFragment extends Fragment {
 
         if(phone.length()<10) {
             phoneNumberEditText.setError("Phone number is invalid");
-            return false;
         }
 
         if(notes.isEmpty()) {
             noteEditText.setError("Notes are blank");
         }
+
         return true;
     }
 
@@ -104,9 +100,9 @@ public class AddContactFragment extends Fragment {
 
         Contacts contacts = new Contacts(firstname, lastname, email, address, phone, notes);
 
-        contactAppRef.push().setValue(contacts);
-
+        contactAppRef.child(lastname).setValue(contacts);
         Toast.makeText(getActivity(),"Contact Successfully Added", Toast.LENGTH_SHORT).show();
+        ClearFields();
     }
 
     void ClearFields() {

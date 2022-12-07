@@ -43,7 +43,7 @@ public class RecyclerFragment extends Fragment {
         View root = binding.getRoot();
 
         recyclerView = root.findViewById(R.id.recycler_view);
-        contactReference = FirebaseDatabase.getInstance().getReference("Contacts");
+        contactReference = FirebaseDatabase.getInstance().getReference().child("Contacts");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

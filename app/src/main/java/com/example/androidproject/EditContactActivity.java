@@ -91,7 +91,6 @@ public class EditContactActivity extends AppCompatActivity {
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Email is invalid");
-            return false;
         }
 
         if(address.isEmpty()){

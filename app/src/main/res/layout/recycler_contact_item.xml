@@ -16,11 +16,48 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_marginVertical="4dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/contact_First_Name"
         android:text="First Name"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="17sp"
+        android:layout_marginVertical="4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact_Email"
+        android:text="Email"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="17sp"
+        android:layout_marginVertical="4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact_Address"
+        android:text="Address"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="17sp"
+        android:layout_marginVertical="4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact_Phone"
+        android:text="Phone Number"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="17sp"
+        android:layout_marginVertical="4dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact_Note"
+        android:text="Notes"
         android:maxLines="2"
         android:ellipsize="end"
         android:textSize="17sp"

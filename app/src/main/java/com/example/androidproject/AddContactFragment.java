@@ -1,5 +1,6 @@
 package com.example.androidproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,9 +49,12 @@ public class AddContactFragment extends Fragment {
         createContactBtn = root.findViewById(R.id.createBtn);
 
         contactAppRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        String removeData = contactAppRef.child("ID").push().getKey();
+
+        Intent intent = new Intent(getContext(), getActivity());
 
         createContactBtn.setOnClickListener((v)-> createContact());
-
+        createContactBtn.setOnClickListener((v)-> ClearFields());
         return root;
     }
 
@@ -93,28 +97,25 @@ public class AddContactFragment extends Fragment {
         String phone =phoneNumberEditText.getText().toString();
         String notes = noteEditText.getText().toString();
 
-        Contacts contacts = new Contacts(firstname, lastname, email, address, phone, notes);
-
         boolean isValidated = validateData(firstname, lastname, email, address, phone, notes);
         if(!isValidated) {
             return;
         }
 
+        Contacts contacts = new Contacts(firstname, lastname, email, address, phone, notes);
+
         contactAppRef.push().setValue(contacts);
+
+        Toast.makeText(getActivity(),"Contact Successfully Added", Toast.LENGTH_SHORT).show();
     }
 
-    void saveContactToFirebase(Contacts contacts) {
-        DocumentReference documentReference;
-        documentReference = Utility.getCollectionReferenceForContacts().document();
-
-        documentReference.set(contacts).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Contact Added successfully", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+    void ClearFields() {
+        firstNameEditText.setText("");
+        lastNameEditText.setText("");
+        emailEditText.setText("");
+        addressEditText.setText("");
+        phoneNumberEditText.setText("");
+        phoneNumberEditText.setText("");
+        noteEditText.setText("");
     }
-
 }

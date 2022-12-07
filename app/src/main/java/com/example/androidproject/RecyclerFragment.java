@@ -16,14 +16,23 @@ import android.view.ViewGroup;
 
 import com.example.androidproject.databinding.FragmentRecyclerBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+
+import java.util.ArrayList;
 
 public class RecyclerFragment extends Fragment {
 
     RecyclerView recyclerView;
     private FragmentRecyclerBinding binding;
     ContactAdapter contactAdapter;
+    DatabaseReference contactReference;
+    ArrayList<Contacts> contacts;
 
 
     @Override
@@ -34,33 +43,29 @@ public class RecyclerFragment extends Fragment {
         View root = binding.getRoot();
 
         recyclerView = root.findViewById(R.id.recycler_view);
-        setupRecyclerView();
-        return root;
-    }
-
-   void setupRecyclerView() {
-        CollectionReference query = Utility.getCollectionReferenceForContacts();
-        FirestoreRecyclerOptions<Contacts> options = new FirestoreRecyclerOptions.Builder<Contacts>().setQuery(query,Contacts.class).build();
+        contactReference = FirebaseDatabase.getInstance().getReference("Contacts");
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        contactAdapter = new ContactAdapter(options,getContext());
+
+        contacts = new ArrayList<>();
+        contactAdapter = new ContactAdapter(getContext(), contacts);
         recyclerView.setAdapter(contactAdapter);
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        contactAdapter.startListening();
-    }
+        contactReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Contacts contact = dataSnapshot.getValue(Contacts.class);
+                    contacts.add(contact);
+                }
+                contactAdapter.notifyDataSetChanged();
+            }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        contactAdapter.stopListening();
-    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        contactAdapter.notifyDataSetChanged();
+            }
+        });
+        return root;
     }
 }

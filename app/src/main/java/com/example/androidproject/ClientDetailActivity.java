@@ -5,10 +5,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -85,7 +88,8 @@ public class ClientDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String note = noteEditText.getText().toString();
 
-                contactAppRef = FirebaseDatabase.getInstance().getReference("Contacts");
+                contactAppRef = FirebaseDatabase.getInstance().getReference("Contacts").child(lastName).child("notes");
+                contactAppRef.setValue(note);
                 Toast.makeText(ClientDetailActivity.this, "Note Updated Successfully", Toast.LENGTH_SHORT).show();
             }
         });
@@ -121,7 +125,12 @@ public class ClientDetailActivity extends AppCompatActivity {
         });
     }
 
-
-
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
 }

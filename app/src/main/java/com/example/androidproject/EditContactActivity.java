@@ -2,10 +2,13 @@ package com.example.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -72,7 +75,10 @@ public class EditContactActivity extends AppCompatActivity {
                 intent.putExtra("phone", phone);
                 intent.putExtra("notes", notes);
 
+                Contacts contacts = new Contacts(firstName, lastName, email, address, phone, notes);
 
+                contactAppRef = FirebaseDatabase.getInstance().getReference("Contacts");
+                contactAppRef.child(lastName).setValue(contacts);
 
                 EditContactActivity.this.startActivity(intent);
             }
@@ -103,5 +109,13 @@ public class EditContactActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
